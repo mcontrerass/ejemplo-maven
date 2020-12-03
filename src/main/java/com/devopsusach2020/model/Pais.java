@@ -16,8 +16,8 @@ public class Pais implements Serializable{
 	private String country;
 	private int recovered;
 	private int active;
-	
-	
+	private float deathRate;
+		
 	public String getMensaje() {
 		return mensaje;
 	}
@@ -53,6 +53,12 @@ public class Pais implements Serializable{
 	}
 	public void setActive(int active) {
 		this.active = active;
+	}
+	public float getDeathRate() {
+		return deathRate;
+	}
+	public void setDeathRate(float deathRate) {
+		this.deathRate = deathRate;
 	}
 	public String getDate() {
 		return date;

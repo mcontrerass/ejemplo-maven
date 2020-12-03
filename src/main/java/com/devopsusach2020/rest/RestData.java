@@ -45,6 +45,7 @@ public class RestData {
 		int confirmed = 0;
 		int death = 0;
 		int recovered = 0;
+		float deathRate = 0;
 		Gson gson = new Gson();
         Pais[] estados = gson.fromJson(call.getBody().toLowerCase(), Pais[].class);
 
@@ -55,10 +56,15 @@ public class RestData {
         	death += estado.getDeaths();
         	recovered += estado.getRecovered();
         }
-        
-    	response.setConfirmed(confirmed);
+       
+		if (confirmed > 0) {
+    		deathRate = death/confirmed;
+		}
+    	
+		response.setConfirmed(confirmed);
     	response.setDeaths(death);
     	response.setRecovered(recovered);
+		response.setDeathRate(deathRate);
     	response.setCountry(message);
     	response.setMensaje("ok");
 
