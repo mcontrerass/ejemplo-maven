@@ -5,38 +5,35 @@ pipeline {
         
         stage('Compile') {
             steps {
-                dir("c:\\\\Mauricio\\\\Manuales\\\\DevOps\\\\USACH\\\\ejemplo-maven") {
-                    sh 'mvn clean compile -e'
-                }
+            	sh 'mvn clean compile -e'
             }
         }
         stage('Test') {
             steps {
-                dir("c:\\\\Mauricio\\\\Manuales\\\\DevOps\\\\USACH\\\\ejemplo-maven") {
-                    sh 'mvn clean test -e'
-                }
+                sh 'mvn clean test -e'
             }
         }
         stage('Jar') {
             steps {
-                dir("c:\\\\Mauricio\\\\Manuales\\\\DevOps\\\\USACH\\\\ejemplo-maven") {
-                    sh 'mvn clean package -e'
-                }
+         	sh 'mvn clean package -e'
             }
         }
+	stage('SonarQube') {
+	    steps {
+	    	withSonarQubeEnv(installationName: 'sonar') {
+			sh 'mvn org.sonarsourse.scanner.maven:sonar-maven-plugins:3.7.0.1746:sonar'
+		}
+	    }
+	}
         stage('Run') {
             steps {
-                dir("c:\\\\Mauricio\\\\Manuales\\\\DevOps\\\\USACH\\\\ejemplo-maven") {
-                    sh 'mvn spring-boot:run &'
-                    sh 'sleep 30'
-                }
+                sh 'mvn spring-boot:run &'
+                sh 'sleep 60'
             }
         }
         stage('TestingApp') {
             steps {
-                dir("c:\\\\Mauricio\\\\Manuales\\\\DevOps\\\\USACH\\\\ejemplo-maven") {
-                    sh 'curl -X GET http://localhost:8081/rest/mscovid/test?msg=testing'
-                }
+                sh 'curl -X GET http://localhost:8081/rest/mscovid/test?msg=testing'
             }
         }
     }
