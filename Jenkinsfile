@@ -23,15 +23,9 @@ pipeline {
 		}
 	    }
 	}
-        stage('Run') {
+        stage('uploadNexus') {
             steps {
-                sh 'mvn spring-boot:run &'
-                sh 'sleep 60'
-            }
-        }
-        stage('TestingApp') {
-            steps {
-                sh 'curl -X GET http://localhost:8081/rest/mscovid/test?msg=testing'
+                // Subir artefacto a Nexus
             }
         }
     }
